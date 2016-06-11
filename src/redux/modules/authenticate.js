@@ -1,4 +1,7 @@
 /* @flow */
+import 'whatwg-fetch'
+import { push } from 'react-router-redux'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -93,6 +96,7 @@ export const logoutUser = (): Function => {
     localStorage.removeItem('id_token')
     localStorage.removeItem('user_info')
     dispatch(receiveLogout())
+    dispatch(push('/'))
   }
 }
 

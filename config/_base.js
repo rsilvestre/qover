@@ -39,10 +39,13 @@ const config = {
   compiler_vendor : [
     'history',
     'react',
+    'react-router-active-component',
     'react-redux',
     'react-router',
     'react-router-redux',
-    'redux'
+    'redux',
+    'redux-form',
+    'whatwg-fetch'
   ],
 
   // ----------------------------------

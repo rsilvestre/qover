@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import NavBar from 'components/NavBar/NavBar'
+import NavBar from '../../components/NavBar/NavBar'
 
 export class Application extends React.Component {
   static propTypes = {

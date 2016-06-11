@@ -1,3 +1,4 @@
+import 'whatwg-fetch'
 const BASE_URL = 'http://localhost:1337/api/'
 
 function callApi (endpoint, authenticated) {

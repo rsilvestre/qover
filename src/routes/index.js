@@ -9,11 +9,19 @@ import { Route, IndexRoute } from 'react-router'
 import Application from 'containers/Application/Application'
 import CoreLayout from 'layouts/CoreLayout/CoreLayout'
 import HomeView from 'views/HomeView/HomeView'
+import FormView from 'views/FormView/FormView'
+
+const requireAuth = (nextState, replaceState) => {
+  if (!localStorage.getItem('id_token')) {
+    replaceState({nextPathname: nextState.location.pathname + nextState.location.search}, '/')
+  }
+}
 
 export default (store) => (
   <Route component={Application}>
     <Route path='/' component={CoreLayout}>
       <IndexRoute component={HomeView} />
+      <Route path='form' component={FormView} onEnter={requireAuth} />
     </Route>
   </Route>
 )
