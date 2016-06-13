@@ -4,18 +4,23 @@ import { push } from 'react-router-redux'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const ADD_QUOTE = 'quote/ADD_QUOTE'
+export const SAVE_QUOTE = 'quote/SAVE_QUOTE'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function addQuote (value: object = {}): Function {
+export const saveQuote = (data : object = {entry: {}, product: {}}): Action => ({
+  type: SAVE_QUOTE,
+  payload: data
+})
+
+export const addQuote = (data : object = {entry: {}, product: {}}): Function => {
   return (dispatch: Function): Promise => {
-    dispatch({
-      type: ADD_QUOTE,
-      payload: value
+    return new Promise((resolve: Function): void => {
+      dispatch(saveQuote(data))
+      dispatch(push('/quote'))
+      resolve()
     })
-    return dispatch(push('/quote'))
   }
 }
 
@@ -27,7 +32,7 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [ADD_QUOTE]: (state: object, action: {payload: object}): object => {
+  [SAVE_QUOTE]: (state: object, action: {payload: object}): object => {
     return {...state, ...action.payload}
   }
 }
@@ -35,7 +40,10 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {}
+const initialState = {
+  entry: {},
+  product: {}
+}
 export default function quoteReducer (state: object = initialState, action: Action): object {
   const handler = ACTION_HANDLERS[action.type]
 
