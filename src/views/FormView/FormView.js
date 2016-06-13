@@ -1,6 +1,9 @@
 import 'whatwg-fetch'
 import React from 'react'
+import { connect } from 'react-redux'
 import { Field, reduxForm, SubmissionError } from 'redux-form'
+
+import { addQuote } from '../../redux/modules/quote'
 
 import CarccField from '../../components/Fields/CarccField'
 import InputField from '../../components/Fields/InputField'
@@ -27,11 +30,17 @@ const validate = values => {
   return errors
 }
 
+type Props = {
+  addQuote: Function
+}
+
 export class FormView extends React.Component {
+  props: Props
   static propTypes = {
     handleSubmit: React.PropTypes.func.isRequired,
     pristine: React.PropTypes.bool.isRequired,
-    submitting: React.PropTypes.bool.isRequired
+    submitting: React.PropTypes.bool.isRequired,
+    addQuote: React.PropTypes.func.isRequired
   };
 
   constructor (props) {
@@ -99,7 +108,8 @@ export class FormView extends React.Component {
           this.setState({success: null})
           throw new SubmissionError(json.error)
         }
-        this.setState({error: null, success: json.data})
+        this.setState({error: null, success: json.data.entry})
+        this.props.addQuote(json.data)
       })
   }
 
@@ -132,7 +142,11 @@ export class FormView extends React.Component {
   }
 }
 
-export default reduxForm({
+const mapStateToProps = () => ({})
+
+export default connect(mapStateToProps, {
+  addQuote: (value) => addQuote(value)
+})(reduxForm({
   form: 'getQuote',
   validate
-})(FormView)
+})(FormView))
